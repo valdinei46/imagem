@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drogaria América - Vitaminas e Suplementos</title>
+    <style>
+        /* Cores temáticas */
+        :root {
+            --amarelo: #FFD700;
+            --amarelo-escuro: #FF8C00;
+            --verde: #006400;
+            --verde-claro: #228B22;
+            --vermelho: #FF0000;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--amarelo), var(--amarelo-escuro));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: var(--vermelho);
+            margin-bottom: 0.5rem;
+        }
+
+        .slogan {
+            font-size: 1.2rem;
+            color: var(--verde);
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: var(--verde);
+            padding: 1rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--amarelo);
+        }
+
+        .banner {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .produtos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 2rem;
+            gap: 1.5rem;
+        }
+
+        .produto {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1.5rem;
+            width: 220px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .produto:hover {
+            transform: translateY(-5px);
+        }
+
+        .produto img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .preco {
+            color: var(--vermelho);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .btn-comprar {
+            background-color: var(--amarelo-escuro);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-comprar:hover {
+            background-color: var(--verde);
+        }
+
+        /* Carrinho */
+        .carrinho-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .carrinho-btn {
+            background-color: var(--vermelho);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .carrinho-contador {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--verde);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .carrinho-modal {
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            width: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .carrinho-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .carrinho-total {
+            font-weight: bold;
+            margin-top: 1rem;
+            text-align: right;
+        }
+
+        .btn-finalizar {
+            background-color: var(--verde);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        /* WhatsApp */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background-color: var(--verde);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .vitaminas-titulo {
+            text-align: center;
+            color: var(--verde);
+            font-size: 2rem;
+            margin: 2rem 0;
+            text-transform: uppercase;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+            nav a {
+                margin: 0 0.8rem;
+                font-size: 0.9rem;
+            }
+            .produto {
+                width: 150px;
+                padding: 1rem;
+            }
+            .produto img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Carrinho -->
+    <div class="carrinho-container">
+        <button class="carrinho-btn">🛒 <span class="carrinho-contador">0</span></button>
+        <div class="carrinho-modal">
+            <h3>Seu Carrinho</h3>
+            <div class="carrinho-itens"></div>
+            <div class="carrinho-total">Total: R$ 0,00</div>
+            <button class="btn-finalizar">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/5595991658009" target="_blank" class="whatsapp-btn">💬</a>
+
+    <header>
+        <div class="logo">DROGARIA AMÉRICA</div>
+        <div class="slogan">Sua saúde em primeiro lugar!</div>
+    </header>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Medicamentos</a>
+        <a href="#">Vitaminas</a>
+        <a href="#">Promoções</a>
+        <a href="#">Contato</a>
+    </nav>
+    <img class="banner" src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Promoções">
+
+    <h2 class="vitaminas-titulo">VITAMINAS E SUPLEMENTOS</h2>
+    
+    <div class="produtos">
+        <div class="produto" data-id="1" data-nome="Vitamina C 1000mg" data-preco="39.90">
+            <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Vitamina C">
+            <h3>Vitamina C 1000mg</h3>
+            <p class="preco">R$ 39,90</p>
+            <button class="btn-comprar">Comprar</button>
+        </div>
+        <div class="produto" data-id="2" data-nome="Ômega 3 1200mg" data-preco="59.90">
+            <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Ômega 3">
+            <h3>Ômega 3 1200mg</h3>
+            <p class="preco">R$ 59,90</p>
+            <button class="btn-comprar">Comprar</button>
+        </div>
+        <div class="produto" data-id="3" data-nome="Vitamina D 2000UI" data-preco="45.50">
+            <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Vitamina D">
+            <h3>Vitamina D 2000UI</h3>
+            <p class="preco">R$ 45,50</p>
+            <button class="btn-comprar">Comprar</button>
+        </div>
+        <div class="produto" data-id="4" data-nome="Colágeno Hidrolisado" data-preco="69.90">
+            <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Colágeno">
+            <h3>Colágeno Hidrolisado</h3>
+            <p class="preco">R$ 69,90</p>
+            <button class="btn-comprar">Comprar</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Drogaria América Matriz © 2024 - CRF/AM 1234</p>
+        <p>Av. Brasil, 1000 - Centro - Manaus/AM</p>
+        <p>WhatsApp: (95) 99165-8009</p>
+    </footer>
+
+    <script>
+        // Carrinho de Compras
+        const carrinho = [];
+        const carrinhoBtn = document.querySelector('.carrinho-btn');
+        const carrinhoModal = document.querySelector('.carrinho-modal');
+        const carrinhoItens = document.querySelector('.carrinho-itens');
+        const carrinhoTotal = document.querySelector('.carrinho-total');
+        const carrinhoContador = document.querySelector('.carrinho-contador');
+        const btnComprar = document.querySelectorAll('.btn-comprar');
+        const btnFinalizar = document.querySelector('.btn-finalizar');
+
+        // Abrir/Fechar carrinho
+        carrinhoBtn.addEventListener('click', () => {
+            carrinhoModal.style.display = carrinhoModal.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Adicionar ao carrinho
+        btnComprar.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const produto = e.target.closest('.produto');
+                const id = produto.getAttribute('data-id');
+                const nome = produto.getAttribute('data-nome');
+                const preco = parseFloat(produto.getAttribute('data-preco'));
+
+                // Verifica se o produto já está no carrinho
+                const itemExistente = carrinho.find(item => item.id === id);
+
+                if (itemExistente) {
+                    itemExistente.quantidade++;
+                } else {
+                    carrinho.push({
+                        id,
+                        nome,
+                        preco,
+                        quantidade: 1
+                    });
+                }
+
+                atualizarCarrinho();
+                carrinhoModal.style.display = 'block';
+            });
+        });
+
+        // Finalizar compra (via WhatsApp)
+        btnFinalizar.addEventListener('click', () => {
+            if (carrinho.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+
+            let mensagem = 'Olá, gostaria de comprar os seguintes itens:\n\n';
+            let total = 0;
+
+            carrinho.forEach(item => {
+                mensagem += `${item.nome} - ${item.quantidade}x - R$ ${(item.preco * item.quantidade).toFixed(2)}\n`;
+                total += item.preco * item.quantidade;
+            });
+
+            mensagem += `\n*Total: R$ ${total.toFixed(2)}*`;
+            mensagem += '\n\nMeu nome é: [SEU NOME]';
+            mensagem += '\nEndereço para entrega: [SEU ENDEREÇO]';
+
+            const url = `https://wa.me/5595991658009?text=${encodeURIComponent(mensagem)}`;
+            window.open(url, '_blank');
+        });
+
+        // Atualizar carrinho
+        function atualizarCarrinho() {
+            carrinhoItens.innerHTML = '';
+            let total = 0;
+
+            if (carrinho.length === 0) {
+                carrinhoItens.innerHTML = '<p>Carrinho vazio</p>';
+            } else {
+                carrinho.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'carrinho-item';
+                    itemElement.innerHTML = `
+                        <div>
+                            <p>${item.nome}</p>
+                            <small>${item.quantidade}x - R$ ${item.preco.toFixed(2)}</small>
+                        </div>
+                        <div>
+                            <p>R$ ${(item.preco * item.quantidade).toFixed(2)}</p>
+                        </div>
+                    `;
+                    carrinhoItens.appendChild(itemElement);
+                    total += item.preco * item.quantidade;
+                });
+            }
+
+            carrinhoTotal.textContent = `Total: R$ ${total.toFixed(2)}`;
+            carrinhoContador.textContent = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+        }
+
+        // Fechar modal ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.carrinho-container') && !e.target.closest('.whatsapp-btn')) {
+                carrinhoModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
